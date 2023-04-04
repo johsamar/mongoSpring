@@ -3,6 +3,8 @@ package com.softlond.baseSpring.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.softlond.baseSpring.pojo.Direccion;
+
 @Document(collection = "usuarios")
 public class Usuario {
 
@@ -15,6 +17,7 @@ public class Usuario {
     private String password;    
     private int edad;
     private String celular;
+    private Direccion direccion;
     
     public String get_id() {
         return _id;
@@ -59,9 +62,12 @@ public class Usuario {
         this.celular = celular;
     }
 
-    
+    public Direccion getDireccion() {
+        return direccion;
+    }
 
-
-
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
+    }
     
 }

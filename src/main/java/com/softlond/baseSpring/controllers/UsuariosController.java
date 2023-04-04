@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.softlond.baseSpring.models.Usuario;
+import com.softlond.baseSpring.responses.Respuesta;
 import com.softlond.baseSpring.services.UsuariosService;
 
 @Controller
@@ -34,12 +35,12 @@ public class UsuariosController {
     }
 
     @GetMapping("/todos")
-    public ResponseEntity<List> getUsuarios() {
-        List respuesta = usuariosService.buscarTodos();
+    public ResponseEntity<Respuesta> getUsuarios() {
+        Respuesta respuesta = usuariosService.buscarTodos();
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=UTF-8");
 
-        return new ResponseEntity<List>(respuesta, headers, HttpStatus.OK);
+        return new ResponseEntity<Respuesta>(respuesta, headers, HttpStatus.OK);
     }
 }

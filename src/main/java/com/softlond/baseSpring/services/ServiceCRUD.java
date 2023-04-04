@@ -3,6 +3,8 @@ package com.softlond.baseSpring.services;
 import java.util.List;
 import java.util.Map;
 
+import com.softlond.baseSpring.responses.Respuesta;
+
 public interface ServiceCRUD {
 
     public Map guardar(Object object);
@@ -11,7 +13,7 @@ public interface ServiceCRUD {
 
     public Map buscarPorId(String id);
 
-    public List buscarTodos();
+    public Respuesta buscarTodos();
 
     public void actualizar(String id, Object object);
 

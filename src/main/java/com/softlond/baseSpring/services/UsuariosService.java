@@ -1,5 +1,8 @@
 package com.softlond.baseSpring.services;
 
-public interface UsuariosService extends ServiceCRUD{
-    
+import com.softlond.baseSpring.models.Usuario;
+
+public interface UsuariosService extends ServiceCRUD {
+
+    Usuario buscarPorEmail(String email);
 }
