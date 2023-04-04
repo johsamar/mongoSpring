@@ -22,11 +22,11 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<Respuesta> login(@RequestBody LoginRequest loginRequest) {
         Respuesta loggeo = authService.login(loginRequest);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=UTF-8");
-        return new ResponseEntity<>(loggeo, headers, HttpStatus.OK);
+        return new ResponseEntity<Respuesta>(loggeo, headers, HttpStatus.OK);
     }
 
 }
