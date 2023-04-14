@@ -9,11 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import com.softlond.baseSpring.models.Usuario;
 
+import reactor.core.publisher.Mono;
+
 public interface UsuariosRepository extends MongoRepository<Usuario, String> {
 
     List<Usuario> findByNombre(String nombre);
 
-    Usuario findByEmail(String email);
+    Mono<Usuario> findByEmail(String email);
 
     // buscar usuario por email y nombre
     Usuario findByEmailAndNombre(String email, String nombre);

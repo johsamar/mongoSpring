@@ -8,6 +8,9 @@ import com.softlond.baseSpring.pojo.LoginRequest;
 import com.softlond.baseSpring.pojo.LoginResponse;
 import com.softlond.baseSpring.responses.Respuesta;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 @Service
 public class AuthServiceImplement implements AuthService {
 
@@ -15,20 +18,28 @@ public class AuthServiceImplement implements AuthService {
     private UsuariosService usuariosService;
 
     @Override
-    public Respuesta login(LoginRequest loginRequest) {
-        Usuario usuarioEncontrado = usuariosService.buscarPorEmail(loginRequest.getUsuario());
+    public Mono<Respuesta> login(LoginRequest loginRequest) {
+        Mono<Usuario> usuarioEncontrado = usuariosService.buscarPorEmail(loginRequest.getUsuario());
 
-        if (usuarioEncontrado == null) {
-            return new Respuesta("Credenciales incorrectas", null);
-        }
+        return usuarioEncontrado.map(
+                usuario -> {
+                    if (usuario == null) {
+                        return new Respuesta("Credenciales incorrectas", null);
+                    }
 
-        if (usuarioEncontrado.getPassword().equals(loginRequest.getPassword())) {
-            LoginResponse loginResponse = new LoginResponse("token", usuarioEncontrado.getEmail());
+                    if (usuario.getPassword().equals(loginRequest.getPassword())) {
+                        LoginResponse loginResponse = new LoginResponse("token", usuario.getEmail());
 
-            return new Respuesta("Login exitoso", loginResponse);
-        }
+                        return new Respuesta("Login correcto", loginResponse);
+                    }
 
-        return new Respuesta("Credenciales incorrectas", null);
+                    return new Respuesta("Credenciales incorrectas", null);
+                });
+    }
+
+    @Override
+    public Mono<Respuesta> signup(Usuario usuario) {
+        
     }
 
 }

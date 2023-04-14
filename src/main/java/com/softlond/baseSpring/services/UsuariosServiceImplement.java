@@ -13,6 +13,8 @@ import com.softlond.baseSpring.models.Usuario;
 import com.softlond.baseSpring.repositories.UsuariosRepository;
 import com.softlond.baseSpring.responses.Respuesta;
 
+import reactor.core.publisher.Mono;
+
 @Service
 public class UsuariosServiceImplement implements UsuariosService {
 
@@ -22,19 +24,14 @@ public class UsuariosServiceImplement implements UsuariosService {
     private ObjectMapper mapper;
 
     @Override
-    public Map guardar(Object object) {
+    public Mono<Map> guardar(Object object) {
         Usuario nuevousuario = (Usuario) object;
 
         Map objectResponse = new HashMap<>();
 
-        Usuario guardado = usuariosRepository.save(nuevousuario);
+        Mono<Usuario> guardado = usuariosRepository.insert()
 
-        if (guardado == null)
-            objectResponse.put("mensaje", "No se pudo guardar el usuario");
-        else
-            objectResponse.put("mensaje", "Usuario guardado con exito");
 
-        return objectResponse;
     }
 
     @Override
@@ -75,8 +72,17 @@ public class UsuariosServiceImplement implements UsuariosService {
     }
 
     @Override
-    public Usuario buscarPorEmail(String email) {
-        return usuariosRepository.findByEmail(email);
+    public Mono<Usuario> buscarPorEmail(String email) {
+        Mono<Usuario> usuarioEncontrado = usuariosRepository.findByEmail(email);
+
+        return usuarioEncontrado.map(
+                usuario -> {
+                    if (usuario == null) {
+                        return null;
+                    }
+
+                    return usuario;
+                });
     }
 
 }

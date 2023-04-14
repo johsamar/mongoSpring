@@ -2,7 +2,9 @@ package com.softlond.baseSpring.services;
 
 import com.softlond.baseSpring.models.Usuario;
 
+import reactor.core.publisher.Mono;
+
 public interface UsuariosService extends ServiceCRUD {
 
-    Usuario buscarPorEmail(String email);
+    Mono<Usuario> buscarPorEmail(String email);
 }

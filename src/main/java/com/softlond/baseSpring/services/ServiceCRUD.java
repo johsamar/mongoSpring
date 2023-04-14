@@ -5,9 +5,11 @@ import java.util.Map;
 
 import com.softlond.baseSpring.responses.Respuesta;
 
+import reactor.core.publisher.Mono;
+
 public interface ServiceCRUD {
 
-    public Map guardar(Object object);
+    public Mono<Map> guardar(Object object);
 
     public void eliminar(Object object);
 
